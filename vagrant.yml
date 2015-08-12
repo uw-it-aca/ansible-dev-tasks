@@ -5,4 +5,4 @@
 
     - name: symlink DocumentRoot to /vagrant/html...
       sudo: yes
-      file: src=/vagrant/html dest=/var/www/html state=link
+      file: src="{{ doc_root }}" dest=/var/www/html state=link
