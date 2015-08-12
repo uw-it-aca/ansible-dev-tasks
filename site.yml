@@ -1,0 +1,9 @@
+
+    - name: check out repositories...
+      git:
+        repo="{{ item.url }}"
+        dest="{{ item.loc }}"
+        accept_hostkey=yes
+      ignore_errors: yes
+      with_items:
+        - "{{ github_checkout }}"

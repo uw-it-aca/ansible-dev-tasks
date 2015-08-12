@@ -1,0 +1,19 @@
+- name: installing virtualenv...
+  sudo: yes
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - build-essential
+    - libxml2-dev
+    - libxslt1-dev
+    - libjpeg-dev
+    - python-dev
+    - python-virtualenv
+    - npm
+
+- name: installing nodeenv...
+  pip: name=nodeenv virtualenv={{ virtualenv_path }}
+  when: not notinitial.stat.exists
+
+- name: converting virtualenv into nodeenv...
+  command: /vagrant/venv/bin/nodeenv -p chdir=/vagrant/venv/
+  when: not notinitial.stat.exists

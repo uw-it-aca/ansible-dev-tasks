@@ -1,0 +1,7 @@
+- name: check for project already created...
+  stat: path=/vagrant/venv/{{ project_name }}
+  register: proj_created
+
+- name: create project...
+  command: /vagrant/venv/bin/django-admin.py startproject {{project_name }} chdir=/vagrant/venv/
+  when: not proj_created.stat.exists

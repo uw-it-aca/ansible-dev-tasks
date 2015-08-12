@@ -1,0 +1,6 @@
+
+    - name: copying pre-commit hook to mdot-rest app...
+      template: src="templates/pre-commit" dest="/vagrant/venv/src/mdot-rest/.git/hooks/" mode="u=rwx,g=rx,o=rx"
+
+    - name: copying pre-commit hook to mdot app...
+      template: src="templates/pre-commit" dest="/vagrant/venv/src/mdot/.git/hooks/" mode="u=rwx,g=rx,o=rx"

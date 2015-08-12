@@ -1,0 +1,7 @@
+- name: checking if up or reload...
+  stat: path=/home/vagrant/notinitial
+  register: notinitial
+
+- name: create flag directory if initial up...
+  command: touch notinitial chdir=/home/vagrant/
+  when: not notinitial.stat.exists

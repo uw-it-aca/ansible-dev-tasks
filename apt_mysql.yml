@@ -1,0 +1,51 @@
+
+    - name: install MySQL...
+      sudo: yes
+      apt: name="{{ item }}" update_cache=yes cache_valid_time=3600 state=present
+      with_items:
+        - mysql-server
+        - php5-mysql
+        - python-mysqldb
+
+    - name: copy .my.cnf...
+      sudo: yes
+      template: src=templates/my.cnf dest=/root/.my.cnf
+
+    - name: start the MySQL service...
+      sudo: yes
+      service:
+        name: mysql
+        state: started
+        enabled: true
+
+    - name: update the MySQL root password for all root accounts...
+      sudo: yes
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ mysql_root_password }}"
+        check_implicit_admin: yes
+        priv: "*.*:ALL,GRANT"
+      with_items:
+        - "{{ ansible_hostname }}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+
+    - name: create app database...
+      sudo: yes
+      mysql_db: name="{{ database_name }}" state=present
+
+    - name: create database user for app...
+      sudo: yes
+      mysql_user: name="{{ database_user }}" password="{{ mysql_app_password }}" priv="{{ database_name }}".*:ALL state=present
+
+    # Only IF the sql file is located in /vagrant
+    - name: check for a sqldump to load...
+      stat: path=/vagrant/itconnect.sql
+      register: sql
+
+    - name: load database into MySQL...
+      sudo: yes
+      mysql_db: name={{ database_name }} state=import target=/vagrant/{{ database_name }}.sql
+      when: sql.stat.exists

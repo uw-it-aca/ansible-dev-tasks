@@ -1,0 +1,6 @@
+- name: install mdot from github...
+  pip: name={{ item }} virtualenv={{ virtualenv_path }}
+  ignore_errors: yes
+  when: not notinitial.stat.exists
+  with_items:
+    - "{{ git_eggs }}"

@@ -1,0 +1,4 @@
+
+    - name: install git...
+      sudo: yes
+      apt: name=git-core update_cache=yes cache_valid_time=3600 state=present

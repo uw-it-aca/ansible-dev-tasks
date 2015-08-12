@@ -1,0 +1,29 @@
+
+    - name: install apache and php...
+      sudo: yes
+      apt: name="{{ item }}" update_cache=yes cache_valid_time=3600 state=present
+      with_items:
+        - apache2
+        - apache2-utils
+        - libapache2-mod-php5
+        - php5
+        - php5-curl
+
+    - name: copy apache config into place...
+      sudo: yes
+      template: src="templates/000-default.conf" dest="/etc/apache2/sites-available/000-default.conf"
+
+    - name: enable mod_rewrite...
+      sudo: yes
+      apache2_module: state=present name=rewrite
+
+    - name: enable mod_info...
+      sudo: yes
+      apache2_module: name=info state=present
+
+    - name: restart the apache service...
+      sudo: yes
+      service:
+        name: apache2
+        state: restarted
+        enabled: true
