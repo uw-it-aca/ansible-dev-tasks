@@ -18,6 +18,13 @@
         state: started
         enabled: true
 
+    - name: restart the apache service...
+      sudo: yes
+      service:
+        name: apache2
+        state: restarted
+        enabled: true
+
     - name: update the MySQL root password for all root accounts...
       sudo: yes
       mysql_user:
