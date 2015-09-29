@@ -6,6 +6,7 @@
         - mysql-server
         - php5-mysql
         - python-mysqldb
+        - libmysqlclient-dev
 
     - name: copy .my.cnf...
       sudo: yes
@@ -42,10 +43,10 @@
 
     # Only IF the sql file is located in /vagrant
     - name: check for a sqldump to load...
-      stat: path=/vagrant/itconnect.sql
+      stat: path={{ database_file_path }}
       register: sql
 
     - name: load database into MySQL...
       sudo: yes
-      mysql_db: name={{ database_name }} state=import target=/vagrant/{{ database_name }}.sql
+      mysql_db: name={{ database_name }} state=import target={{ database_file_path }}
       when: sql.stat.exists
