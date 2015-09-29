@@ -1,0 +1,11 @@
+    - name: installing less...
+      sudo: yes
+      npm: name=less global=yes
+
+    - name: install node...
+      sudo: yes
+      apt: name=nodejs-legacy update_cache=yes cache_valid_time=3600 state=present
+
+    - name: installing a11y...
+      sudo: yes
+      npm: name=a11y global=yes

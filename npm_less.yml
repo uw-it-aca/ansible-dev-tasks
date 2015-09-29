@@ -1,3 +1,0 @@
-- name: installing less...
-  sudo: yes
-  npm: name=less global=yes
