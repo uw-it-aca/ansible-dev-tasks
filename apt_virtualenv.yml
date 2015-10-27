@@ -1,3 +1,15 @@
+# The following two tasks have to run before the
+# apt becuase of nodejs
+- name: Getting node source...
+  get_url: url=https://deb.nodesource.com/setup_4.x dest=/home/vagrant/nodejs.sh
+
+- name: Change script permissions...
+  file: path=/home/vagrant/nodejs.sh mode=0777
+
+- name: Execute node source...
+  sudo: yes
+  command: /bin/bash nodejs.sh chdir=/home/vagrant
+
 - name: installing virtualenv...
   sudo: yes
   apt: pkg={{ item }} state=installed update_cache=yes
@@ -8,12 +20,8 @@
     - libjpeg-dev
     - python-dev
     - python-virtualenv
-    - npm
+    - nodejs
 
-- name: installing nodeenv...
-  pip: name=nodeenv virtualenv={{ virtualenv_path }}
-  when: not notinitial.stat.exists
-
-- name: converting virtualenv into nodeenv...
-  command: /vagrant/venv/bin/nodeenv -p chdir=/vagrant/venv/
+- name: installing PEP8...
+  pip: name=pep8 virtualenv={{ virtualenv_path }}
   when: not notinitial.stat.exists
