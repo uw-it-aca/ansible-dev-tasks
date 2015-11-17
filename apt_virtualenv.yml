@@ -20,6 +20,7 @@
     - libjpeg-dev
     - python-dev
     - python-virtualenv
+    - zlib1g-dev
     - nodejs
 
 - name: installing PEP8...
