@@ -26,3 +26,11 @@
 - name: installing PEP8...
   pip: name=pep8 virtualenv={{ virtualenv_path }}
   when: not notinitial.stat.exists
+
+- name: installing less...
+  sudo: yes
+  npm: name=less global=yes
+
+- name: installing a11y...
+  sudo: yes
+  npm: name=a11y global=yes
