@@ -1,14 +1,14 @@
 # The following two tasks have to run before the
 # apt becuase of nodejs
 - name: Getting node source...
-  get_url: url=https://deb.nodesource.com/setup_4.x dest=/home/vagrant/nodejs.sh
+  get_url: url=https://deb.nodesource.com/setup_4.x dest=/home/ubuntu/nodejs.sh
 
 - name: Change script permissions...
-  file: path=/home/vagrant/nodejs.sh mode=0777
+  file: path=/home/ubuntu/nodejs.sh mode=0777
 
 - name: Execute node source...
   sudo: yes
-  command: /bin/bash nodejs.sh chdir=/home/vagrant
+  command: /bin/bash nodejs.sh chdir=/home/ubuntu
 
 - name: installing virtualenv...
   sudo: yes
