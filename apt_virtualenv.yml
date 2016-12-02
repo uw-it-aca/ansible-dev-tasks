@@ -1,5 +1,15 @@
 # The following two tasks have to run before the
 # apt becuase of nodejs
+- name: Install debsource dependencies | python
+  sudo: yes
+  apt:
+    name: '{{ item }}'
+  with_items: [python-urllib3, python-openssl, python-pyasn1, python-pip]
+
+- name: Install debsource dependencies | pip
+  sudo: yes
+  command: pip install ndg-httpsclient
+
 - name: Getting node source...
   get_url: url=https://deb.nodesource.com/setup_4.x dest=/home/vagrant/nodejs.sh
 
